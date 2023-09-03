@@ -1,1 +1,9 @@
 <h1>BABY SLEEP APP</h1>
+
+<ul>
+  <% @naps.each do |nap| %>
+    <li>
+      <%= nap.title %>,   <%= nap.date %>
+    </li>
+  <% end %>
+</ul>
