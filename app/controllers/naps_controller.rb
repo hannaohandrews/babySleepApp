@@ -20,4 +20,9 @@ class NapsController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
+
+  private
+  def nap_params
+    params.require(:nap).permit(:title,:date,:age, :wake_up_time,:bedtime)
+  end
 end
