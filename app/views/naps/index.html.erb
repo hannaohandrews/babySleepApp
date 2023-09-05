@@ -3,7 +3,7 @@
 <ul>
   <% @naps.each do |nap| %>
     <li>
-      <%= nap.title %>,   <%= nap.date %>
+      <%= link_to nap.title%>,   <%= nap.date %>
     </li>
   <% end %>
 </ul>

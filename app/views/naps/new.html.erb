@@ -1,0 +1,31 @@
+<h1>New Nap</h1>
+<%= form_with model: @nap do |form| %>
+  <div>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+  </div><br>
+
+  <div>
+    <%= form.label :date %><br>
+    <%= form.date_field :date %>
+  </div><br>
+
+  <div>
+    <%= form.label :age %><br>
+    <%= form.number_field :age, in: 1.0..12.0, step: 1 %> months
+  </div><br>
+
+  <div>
+    <%= form.label :wake_up_time %><br>
+    <%= form.time_field :wake_up_time %>
+  </div><br>
+
+  <div>
+    <%= form.label :bedtime %><br>
+    <%= form.time_field :bedtime %>
+  </div><br>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
