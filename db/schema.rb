@@ -10,7 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_03_041539) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_08_050145) do
+  create_table "calculations", force: :cascade do |t|
+    t.time "wake_up_time"
+    t.time "bedtime"
+    t.time "nap1"
+    t.time "nap2"
+    t.time "nap3"
+    t.time "nap4"
+    t.time "nap5"
+    t.integer "awake_window"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "naps", force: :cascade do |t|
     t.string "title"
     t.date "date"

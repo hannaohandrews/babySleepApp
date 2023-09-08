@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  wake_up_time: 2023-09-07 22:01:45
+  bedtime: 2023-09-07 22:01:45
+  nap1: 2023-09-07 22:01:45
+  nap2: 2023-09-07 22:01:45
+  nap3: 2023-09-07 22:01:45
+  nap4: 2023-09-07 22:01:45
+  nap5: 2023-09-07 22:01:45
+  awake_window: 1
+
+two:
+  wake_up_time: 2023-09-07 22:01:45
+  bedtime: 2023-09-07 22:01:45
+  nap1: 2023-09-07 22:01:45
+  nap2: 2023-09-07 22:01:45
+  nap3: 2023-09-07 22:01:45
+  nap4: 2023-09-07 22:01:45
+  nap5: 2023-09-07 22:01:45
+  awake_window: 1
