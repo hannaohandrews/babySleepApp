@@ -1,46 +1,41 @@
-<h1>New Nap</h1>
-<%= form_with model: @nap do |form| %>
+
+<% if flash[:success] %>
+  <div class="alert alert-success">
+    <%= flash[:success] %>
+  </div>
+<% end %>
+
+
+<h1>New Nap Schedule</h1>
+
+<%= form_with model: @nap, url: naps_path, method: :post, local: true do |form| %>
+
   <div>
     <%= form.label :title %><br>
     <%= form.text_field :title %>
-        <% @nap.errors.full_messages_for(:title).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
   </div><br>
 
   <div>
     <%= form.label :date %><br>
     <%= form.date_field :date %>
-       <% @nap.errors.full_messages_for(:date).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
   </div><br>
 
   <div>
     <%= form.label :age %><br>
-    <%= form.number_field :age, in: 1.0..24.0, step: 1 %> months
-       <% @nap.errors.full_messages_for(:age).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
+    <%= form.number_field :age, in: 1..36, step: 1 %> months
   </div><br>
 
   <div>
     <%= form.label :wake_up_time %><br>
     <%= form.time_field :wake_up_time %>
-       <% @nap.errors.full_messages_for(:wake_up_time).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
   </div><br>
 
   <div>
     <%= form.label :bedtime %><br>
     <%= form.time_field :bedtime %>
-       <% @nap.errors.full_messages_for(:bedtime).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
   </div><br>
 
   <div>
-    <%= form.submit %>
+    <%= form.submit 'Create Nap Schedule' %>
   </div>
 <% end %>

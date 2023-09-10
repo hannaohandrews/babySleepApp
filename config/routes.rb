@@ -1,11 +1,7 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
   root "naps#index"
+  resources :naps
+  get '/calculate_schedule/:id', to: 'naps#calculate_schedule', as: :calculate_schedule
 
-  resources :naps do
-    resources :calculations
-  end
+  post '/save_result', to: 'naps#save_result', as: :save_result
 end

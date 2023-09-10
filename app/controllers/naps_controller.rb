@@ -15,14 +15,34 @@ class NapsController < ApplicationController
     @nap = Nap.new(nap_params)
 
     if @nap.save
-      redirect_to @nap
+      # Flash a success message
+      flash[:success] = "Nap schedule created successfully!"
+      redirect_to calculate_schedule_path(id: @nap.id)
     else
-      render :new, status: :unprocessable_entity
+      render "new"
     end
   end
 
+  def calculate_schedule
+    @nap = Nap.find(params[:id])
+  
+    if @nap.valid?
+      render "result"
+    else
+      puts "Validation Errors: #{nap.errors.full_messages}"
+      render "new"
+    end
+  end
+
+  def save_result
+    session[:result_data] = params[:result_data]
+    redirect_to root_path, notice: "Nap schedule saved successfully!"
+  end
+
   private
+
   def nap_params
     params.require(:nap).permit(:title,:date,:age, :wake_up_time,:bedtime)
   end
+
 end
