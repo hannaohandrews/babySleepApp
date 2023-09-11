@@ -27,6 +27,7 @@ class NapsController < ApplicationController
     @nap = Nap.find(params[:id])
   
     if @nap.valid?
+      calculated_nap_schedule
       render "result"
     else
       puts "Validation Errors: #{nap.errors.full_messages}"
@@ -43,6 +44,14 @@ class NapsController < ApplicationController
 
   def nap_params
     params.require(:nap).permit(:title,:date,:age, :wake_up_time,:bedtime)
+  end
+
+  def calculated_nap_schedule
+    awake_window = 3 # hours
+    wake_up_time = @nap.wake_up_time
+    bedtime = @nap.bedtime
+    nap1 = wake_up_time + awake_window
+    @nap.nap1 = nap1
   end
 
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_08_050145) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_11_050952) do
   create_table "calculations", force: :cascade do |t|
     t.time "wake_up_time"
     t.time "bedtime"
@@ -32,6 +32,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_08_050145) do
     t.time "bedtime"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.time "nap1"
+    t.time "nap2"
+    t.time "nap3"
+    t.time "nap4"
+    t.time "nap5"
+    t.time "awake_window"
   end
 
   create_table "results", force: :cascade do |t|

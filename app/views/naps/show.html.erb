@@ -1,17 +1,13 @@
-<h1><%= @nap.title%></h1>
+<h1> Saved NAP</h1>
+<p> TITLE: <%= @nap.title %> </p>
+<p> DATE: <%= @nap.date %> </p>
+<p> AGE: <%= @nap.age %> Months</p>
+<p> WAKE UP TIME: <%= @nap.wake_up_time.strftime("%I:%M %p") %> </p>
+<p> BEDTIME: <%= @nap.bedtime.strftime("%I:%M %p") %> </p>
 
-  <div>
-  <p><%= @nap.date%></p>
-  </div>
+<p> Awake windows: <%= @nap.awake_window%> </p>
+<p> Nap1: <%= @nap.nap1.strftime("%I:%M %p") %></p>
+<%# <p> Nap2: <%= @nap.nap2.strftime("%I:%M %p") %></p>
+<%# <p> Nap3: <%= @nap.nap3.strftime("%I:%M %p") %></p>
 
-  <div>
-  <p><%= @nap.age%> months</p>
-  </div>
-
-  <div>
-  <p><%= @nap.wake_up_time%></p>
-  </div>
-
-  <div>
-  <p><%= @nap.bedtime%></p>
-  </div>
+<%= link_to "Home", '/' %>

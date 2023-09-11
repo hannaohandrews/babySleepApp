@@ -1,11 +1,3 @@
-
-<% if flash[:success] %>
-  <div class="alert alert-success">
-    <%= flash[:success] %>
-  </div>
-<% end %>
-
-
 <h1>New Nap Schedule</h1>
 
 <%= form_with model: @nap, url: naps_path, method: :post, local: true do |form| %>

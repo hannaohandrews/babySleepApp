@@ -1,14 +1,24 @@
+<% if flash[:success] %>
+  <div class="alert alert-success">
+    <%= flash[:success] %>
+  </div>
+<% end %>
+
 <h1> CALCULATED NAP</h1>
-<p> <%= @nap.title %> </p>
-<p> <%= @nap.date %> </p>
-<p> <%= @nap.age %> </p>
-<p> <%= @nap.wake_up_time %> </p>
-<p> <%= @nap.bedtime %> </p>
+<p> TITLE: <%= @nap.title %> </p>
+<p> DATE: <%= @nap.date %> </p>
+<p> AGE: <%= @nap.age %> </p>
+<p> WAKE UP TIME: <%= @nap.wake_up_time.strftime("%I:%M %p") %> </p>
+<p> BEDTIME: <%= @nap.bedtime.strftime("%I:%M %p") %> </p>
+
+<p> Awake windows: <%= @nap.awake_window%> </p>
+<p> Nap1: <%= @nap.nap1.strftime("%I:%M %p") %></p>
+<%# <p> Nap2: <%= @nap.nap2.strftime("%I:%M %p") %></p>
+<%# <p> Nap3: <%= @nap.nap3.strftime("%I:%M %p") %></p>
 
 <%= form_with url: save_result_path, method: :post, local: true do |form| %>
   <!-- Add any hidden fields or data you want to send to the save_result action -->
   <%= form.hidden_field :result_data, value: @calculated_schedule %>
-  
-  <!-- Add the "Save" button -->
+
   <%= form.submit 'Save', class: 'btn btn-primary' %>
 <% end %>
