@@ -6,4 +6,6 @@ validates :wake_up_time, presence: true
 validates :bedtime, presence: true
 
 attr_accessor :nap1, :nap2, :nap3, :nap4, :nap5, :awake_window
+
+attribute :calculated_schedule, :text
 end

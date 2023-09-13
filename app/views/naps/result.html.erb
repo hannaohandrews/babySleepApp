@@ -1,24 +1,23 @@
+<h1>Calculated Schedule</h1>
+<p>Title: <%= @calculated_schedule[:title] %></p>
+<p>Date: <%= @calculated_schedule[:date] %></p>
+<p>Age: <%= @calculated_schedule[:age] %> Months</p>
+<p>Wake Up Time: <%= @calculated_schedule[:wake_up_time].strftime("%I:%M %p") %></p>
+<p>Bedtime: <%= @calculated_schedule[:bedtime].strftime("%I:%M %p") %></p>
+<p>Awake Window: <%= @calculated_schedule[:awake_window] %></p>
+<p>Nap1: <%= @calculated_schedule[:nap1]&.strftime("%I:%M %p") %></p>
+<p>Nap2: <%= @calculated_schedule[:nap2]&.strftime("%I:%M %p") %></p>
+
+
+<%# Add this form to the result page %>
+<%= form_with url: save_result_path(nap_id: @nap.id), method: :post, local: true do |form| %>
+  <!-- Add any hidden fields or data you want to send to the save_result action aka :result_data -->
+  <%= form.hidden_field :result_data, value: @calculated_schedule.to_json %>
+  <%= form.submit 'Save', class: 'btn btn-primary' %>
+<% end %>
+
 <% if flash[:success] %>
   <div class="alert alert-success">
     <%= flash[:success] %>
   </div>
-<% end %>
-
-<h1> CALCULATED NAP</h1>
-<p> TITLE: <%= @nap.title %> </p>
-<p> DATE: <%= @nap.date %> </p>
-<p> AGE: <%= @nap.age %> </p>
-<p> WAKE UP TIME: <%= @nap.wake_up_time.strftime("%I:%M %p") %> </p>
-<p> BEDTIME: <%= @nap.bedtime.strftime("%I:%M %p") %> </p>
-
-<p> Awake windows: <%= @nap.awake_window%> </p>
-<p> Nap1: <%= @nap.nap1.strftime("%I:%M %p") %></p>
-<%# <p> Nap2: <%= @nap.nap2.strftime("%I:%M %p") %></p>
-<%# <p> Nap3: <%= @nap.nap3.strftime("%I:%M %p") %></p>
-
-<%= form_with url: save_result_path, method: :post, local: true do |form| %>
-  <!-- Add any hidden fields or data you want to send to the save_result action -->
-  <%= form.hidden_field :result_data, value: @calculated_schedule %>
-
-  <%= form.submit 'Save', class: 'btn btn-primary' %>
 <% end %>

@@ -4,10 +4,15 @@
 <p> AGE: <%= @nap.age %> Months</p>
 <p> WAKE UP TIME: <%= @nap.wake_up_time.strftime("%I:%M %p") %> </p>
 <p> BEDTIME: <%= @nap.bedtime.strftime("%I:%M %p") %> </p>
+<p> Awake windows: <%= @nap.calculated_schedule["awake_window"] %> </p>
 
-<p> Awake windows: <%= @nap.awake_window%> </p>
-<p> Nap1: <%= @nap.nap1.strftime("%I:%M %p") %></p>
-<%# <p> Nap2: <%= @nap.nap2.strftime("%I:%M %p") %></p>
-<%# <p> Nap3: <%= @nap.nap3.strftime("%I:%M %p") %></p>
+<% if @nap.calculated_schedule["nap1"].present? %>
+  <p> Nap1: <%= Time.parse(@nap.calculated_schedule["nap1"]).strftime("%I:%M %p") %></p>
+  <%= debug @nap.calculated_schedule %>
+<% end %>
+
+<% if @nap.calculated_schedule["nap2"].present? %>
+  <p> Nap2: <%= Time.parse(@nap.calculated_schedule["nap2"]).strftime("%I:%M %p") %></p>
+<% end %>
 
 <%= link_to "Home", '/' %>
