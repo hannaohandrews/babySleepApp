@@ -4,7 +4,7 @@
 <p>Age: <%= @calculated_schedule[:age] %> Months</p>
 <p>Wake Up Time: <%= @calculated_schedule[:wake_up_time].strftime("%I:%M %p") %></p>
 <p>Bedtime: <%= @calculated_schedule[:bedtime].strftime("%I:%M %p") %></p>
-<p>Awake Window: <%= @calculated_schedule[:awake_window] %></p>
+<p>Awake Window: <%= (@calculated_schedule[:awake_window]/3600).to_i %> hours</p>
 <p>Nap1: <%= @calculated_schedule[:nap1]&.strftime("%I:%M %p") %></p>
 <p>Nap2: <%= @calculated_schedule[:nap2]&.strftime("%I:%M %p") %></p>
 

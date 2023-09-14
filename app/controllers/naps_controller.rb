@@ -2,10 +2,12 @@ class NapsController < ApplicationController
   def index
     @naps = Nap.all
   end
-  
+
   def show
     @nap = Nap.find(params[:id])
   
+    @calculated_schedule = @nap.calculated_schedule
+
     if @nap.calculated_schedule.present?
       # Parse the calculated_schedule JSON string into a hash
       calculated_schedule_hash = JSON.parse(@nap.calculated_schedule)
@@ -15,12 +17,11 @@ class NapsController < ApplicationController
       calculated_schedule_hash["nap2"] = DateTime.parse(calculated_schedule_hash["nap2"]) if calculated_schedule_hash["nap2"].present?
   
       # Assign the parsed values to instance variables for use in the view
-      @awake_window = calculated_schedule_hash["awake_window"]
-      @nap1 = calculated_schedule_hash["nap1"]
-      @nap2 = calculated_schedule_hash["nap2"]
+      @nap.awake_window = calculated_schedule_hash["awake_window"]
+      @nap.nap1 = calculated_schedule_hash["nap1"]
+      @nap.nap2 = calculated_schedule_hash["nap2"]
     end
   end
-  
 
   def new
     @nap = Nap.new
@@ -42,7 +43,6 @@ class NapsController < ApplicationController
     @nap = Nap.find(params[:id])
 
     if @nap.valid?
-      puts 'HERE NAP VALID?'
       naps_calculated
 
       @nap.nap1 = @nap1
@@ -92,7 +92,6 @@ end
   end
 
   def naps_calculated
-    puts 'HERE NAPS CALCULATED'
     awake_window = 3.hours
     @awake_window = awake_window
     @nap1 = @nap.wake_up_time + awake_window
