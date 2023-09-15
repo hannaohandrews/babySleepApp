@@ -3,10 +3,11 @@
 <p>Date: <%= @nap.date %></p>
 <p>Age: <%= @nap.age %> Months</p>
 <p>Wake Up Time: <%= @nap.wake_up_time.strftime("%I:%M %p") %></p>
-<p>Bedtime: <%= @nap.bedtime.strftime("%I:%M %p") %></p>
+<p>Desired Bedtime: <%= @nap.bedtime.strftime("%I:%M %p") %></p>
 <p>Awake Window: <%= (@calculated_schedule[:awake_window]/3600).to_i %> hours</p>
 <p>Nap1: <%= @calculated_schedule[:nap1]&.strftime("%I:%M %p") %></p>
 <p>Nap2: <%= @calculated_schedule[:nap2]&.strftime("%I:%M %p") %></p>
+<p>Nap Duration: <%= (@calculated_schedule[:nap_duration]) %> </p>
 
 
 <%# Add this form to the result page %>
