@@ -5,17 +5,14 @@ class NapsController < ApplicationController
 
   def show
     @nap = Nap.find(params[:id])
-  
     @calculated_schedule = @nap.calculated_schedule
 
     if @nap.calculated_schedule.present?
       # Parse the calculated_schedule JSON string into a hash
       calculated_schedule_hash = JSON.parse(@nap.calculated_schedule)
-  
       # Convert the time strings to DateTime objects if they are present
       calculated_schedule_hash["nap1"] = DateTime.parse(calculated_schedule_hash["nap1"]) if calculated_schedule_hash["nap1"].present?
       calculated_schedule_hash["nap2"] = DateTime.parse(calculated_schedule_hash["nap2"]) if calculated_schedule_hash["nap2"].present?
-  
       # Assign the parsed values to instance variables for use in the view
       @nap.awake_window = calculated_schedule_hash["awake_window"]
       @nap.nap1 = calculated_schedule_hash["nap1"]
@@ -45,24 +42,15 @@ class NapsController < ApplicationController
     if @nap.valid?
       naps_calculated
 
-      @nap.nap1 = @nap1
-      @nap.nap2 = @nap2
-      @nap.awake_window = @awake_window
-
       if @nap.save
         puts "Nap saved successfully"
       else
         puts "Nap save failed with errors: #{nap.errors.full_messages}"
       end
       @calculated_schedule = {
-        title: @nap.title,
-        date: @nap.date,
-        age: @nap.age,
-        wake_up_time: @nap.wake_up_time,
-        bedtime: @nap.bedtime,
         awake_window: @awake_window,
-        nap1: @nap.nap1,
-        nap2: @nap.nap2
+        nap1: @nap1,
+        nap2: @nap2
       }
       render "result"
     else
@@ -88,11 +76,32 @@ end
 
   private
   def nap_params
-    params.require(:nap).permit(:title,:date,:age, :wake_up_time,:bedtime, :awake_window,:nap1, :nap2)
+    params.require(:nap).permit(:title,:date,:age, :wake_up_time,:bedtime)
   end
 
   def naps_calculated
-    awake_window = 3.hours
+    if @nap.age == 1
+      awake_window = 1.hours
+    elsif @nap.age == 2 || @nap.age == 3
+      awake_window = 1.5.hours
+    elsif @nap.age == 4
+      awake_window = 2.hours
+    elsif @nap.age == 5
+      awake_window = 3.hours
+    elsif @nap.age == 6
+      awake_window = 3.5.hours
+    elsif @nap.age == 7
+      awake_window = 4.hours
+    elsif @nap.age == 8
+            awake_window = 4.5.hours
+    elsif @nap.age <= 9 || @nap.age >= 10
+            awake_window = 5.hours
+    elsif @nap.age <= 13 && @nap.age >= 18
+      awake_window = 5.hours
+    elsif @nap.age <= 19 && @nap.age >= 24
+      awake_window = 5.hours
+    end
+  
     @awake_window = awake_window
     @nap1 = @nap.wake_up_time + awake_window
     @nap2 = @nap1 + awake_window
