@@ -48,7 +48,7 @@ class NapsController < ApplicationController
       naps_calculated
       # Calculate the nap duration
       naps_duration_calculation
-      puts 'nap duration', @naps_duration
+
       if @nap.save
         puts "Nap saved successfully"
       else
@@ -60,12 +60,27 @@ class NapsController < ApplicationController
         awake_window: @awake_window,
         nap1: @nap1,
         nap2: @nap2,
-        nap_duration: @nap_duration 
+        nap_duration: @nap_duration
       }
       render "result"
     else
       puts "Validation Errors: #{nap.errors.full_messages}"
       render "new"
+    end
+  end
+
+  def edit
+    @nap = Nap.find(params[:id])
+  end
+
+  def update
+    @nap = Nap.find(params[:id])
+
+    if @nap.update(nap_params)
+      flash[:success] = "Nap schedule updated successfully!"
+      redirect_to calculate_schedule_path(id: @nap.id)
+    else
+      render "edit"
     end
   end
 
@@ -81,6 +96,14 @@ class NapsController < ApplicationController
       flash[:error] = "Error saving Nap result."
       render "result" # Render the result view again if there's an error
     end
+  end
+
+  def destroy
+    @nap = Nap.find(params[:id])
+    @nap.destroy
+
+    flash[:success] = "Nap schedule deleted successfully!"
+    redirect_to root_path
   end
 end
 
@@ -104,30 +127,30 @@ end
       awake_window = 3.5.hours
     elsif @nap.age == 8
       awake_window = 4.hours
-    elsif @nap.age <= 9 && @nap.age >= 12
+    elsif @nap.age >= 9 && @nap.age <= 12
       awake_window = 4.5.hours
-    elsif @nap.age <= 13 && @nap.age >= 24
+    elsif @nap.age >= 13 && @nap.age <= 24
       awake_window = 5.hours
     end
 
     @awake_window = awake_window
     @nap1 = @nap.wake_up_time + awake_window
     @nap2 = @nap1 + awake_window
+  
   end
 
   def naps_duration_calculation
     if @nap.age == 1
       nap_duration = '15 min to 4 hours'
-    elsif @nap.age <= 2 && @nap.age >= 5
+    elsif @nap.age >= 2 && @nap.age <= 5
       nap_duration = '30 min to 2 hours'
-    elsif @nap.age <= 6 && @nap.age >= 7
+    elsif @nap.age >= 6 && @nap.age <= 7
       nap_duration = '45 min to 2 hours'
-    elsif @nap.age <= 8 && @nap.age >= 12
+    elsif @nap.age >= 8 && @nap.age <= 12
       nap_duration = '1 to 2 hours'
-    elsif @nap.age <= 13 && @nap.age >= 24
+    elsif @nap.age >= 13 && @nap.age <= 24
       nap_duration = '1 to 3 hours'
     end
 
     @nap_duration = nap_duration
-    puts 'HERE NAP DURATION', @nap_duration
   end

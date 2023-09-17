@@ -1,0 +1,33 @@
+<h1>EDIT</h1>
+
+<%= form_with model: @nap, url: nap_path(@nap), method: :patch, local: true do |form| %>
+
+  <div>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+  </div><br>
+
+  <div>
+    <%= form.label :date %><br>
+    <%= form.date_field :date %>
+  </div><br>
+
+  <div>
+    <%= form.label :age %><br>
+    <%= form.number_field :age, in: 1..36, step: 1 %> months
+  </div><br>
+
+  <div>
+    <%= form.label :wake_up_time %><br>
+    <%= form.time_field :wake_up_time %>
+  </div><br>
+
+  <div>
+    <%= form.label :bedtime %><br>
+    <%= form.time_field :bedtime %>
+  </div><br>
+
+  <div>
+    <%= form.submit 'Edit Nap Schedule' %>
+  </div>
+<% end %>
