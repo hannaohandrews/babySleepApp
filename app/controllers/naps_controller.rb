@@ -38,7 +38,6 @@ class NapsController < ApplicationController
 
   def create
     @nap = Nap.new(nap_params)
-
     if @nap.save
       # Flash a success message
       flash[:success] = 'Nap schedule created successfully!'
