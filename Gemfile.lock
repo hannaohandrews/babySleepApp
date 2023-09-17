@@ -90,6 +90,10 @@ GEM
     erubi (1.12.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    haml (6.1.2)
+      temple (>= 0.8.2)
+      thor
+      tilt
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     importmap-rails (1.2.1)
@@ -128,6 +132,11 @@ GEM
     nio4r (2.5.9)
     nokogiri (1.15.4-x86_64-darwin)
       racc (~> 1.4)
+    prettier (4.0.2)
+      syntax_tree (>= 4.0.1)
+      syntax_tree-haml (>= 2.0.0)
+      syntax_tree-rbs (>= 0.2.0)
+    prettier_print (1.2.1)
     psych (5.1.0)
       stringio
     public_suffix (5.0.3)
@@ -166,6 +175,7 @@ GEM
       thor (~> 1.0)
       zeitwerk (~> 2.5)
     rake (13.0.6)
+    rbs (3.2.1)
     rdoc (6.5.0)
       psych (>= 4.0.0)
     regexp_parser (2.8.1)
@@ -188,7 +198,19 @@ GEM
     stimulus-rails (1.2.2)
       railties (>= 6.0.0)
     stringio (3.0.8)
+    syntax_tree (6.1.1)
+      prettier_print (>= 1.2.0)
+    syntax_tree-haml (4.0.3)
+      haml (>= 5.2)
+      prettier_print (>= 1.2.1)
+      syntax_tree (>= 6.0.0)
+    syntax_tree-rbs (1.0.0)
+      prettier_print
+      rbs
+      syntax_tree (>= 2.0.1)
+    temple (0.10.2)
     thor (1.2.2)
+    tilt (2.3.0)
     timeout (0.4.0)
     turbo-rails (1.4.0)
       actionpack (>= 6.0.0)
@@ -222,6 +244,7 @@ DEPENDENCIES
   debug
   importmap-rails
   jbuilder
+  prettier (~> 4.0)
   puma (~> 5.0)
   rails (~> 7.0.7, >= 7.0.7.2)
   selenium-webdriver

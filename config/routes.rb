@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
-  root "naps#index"
+  root 'naps#index'
   resources :naps
 
   get '/calculate_schedule/:id', to: 'naps#calculate_schedule', as: :calculate_schedule
