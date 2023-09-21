@@ -94,6 +94,7 @@ class NapsController < ApplicationController
   def save_result
     saved_schedule = params[:result_data]
     @nap = Nap.find(params[:nap_id])
+    puts 'calculated schedule', @nap
 
     if @nap.update(calculated_schedule: saved_schedule)
       flash[:success] = 'Nap result saved successfully!'
@@ -122,28 +123,28 @@ end
 
 def naps_calculated
   if @nap.age == 1
-    awake_window = 1.hours
+    awake_window = 1
   elsif @nap.age == 2 || @nap.age == 3
-    awake_window = 1.5.hours
+    awake_window = 1.5
   elsif @nap.age == 4
-    awake_window = 2.hours
+    awake_window = 2
   elsif @nap.age == 5
-    awake_window = 2.5.hours
+    awake_window = 2.5
   elsif @nap.age == 6
-    awake_window = 3.hours
+    awake_window = 3
   elsif @nap.age == 7
-    awake_window = 3.5.hours
+    awake_window = 3.5
   elsif @nap.age == 8
-    awake_window = 4.hours
+    awake_window = 4
   elsif @nap.age >= 9 && @nap.age <= 12
-    awake_window = 4.5.hours
+    awake_window = 4.5
   elsif @nap.age >= 13 && @nap.age <= 24
-    awake_window = 5.hours
+    awake_window = 5
   end
 
   @awake_window = awake_window
-  @nap1 = @nap.wake_up_time + awake_window
-  @nap2 = @nap1 + awake_window
+  @nap1 = @nap.wake_up_time + awake_window.hours
+  @nap2 = @nap1 + awake_window.hours
 end
 
 def naps_duration_calculation

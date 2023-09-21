@@ -4,11 +4,10 @@
 <p> AGE: <%= @nap.age %> Months</p>
 <p> WAKE UP TIME: <%= @nap.wake_up_time.strftime("%I:%M %p") %> </p>
 <p> DESIRED BEDTIME: <%= @nap.bedtime.strftime("%I:%M %p") %> </p>
-<p> Awake Window: <%= (@nap.awake_window / 3600).to_i %> hours </p>
+<p> Awake Window: <%= number_with_precision(@nap.awake_window, precision: 2) %> hours </p>
+<p> Nap duration: <%= @nap_duration %> </p>
 <p> NAP1: <%= @nap.nap1&.strftime("%I:%M %p") %> </p>
 <p> NAP2: <%= @nap.nap2&.strftime("%I:%M %p") %> </p>
-<p> Nap duration: <%= @nap_duration %> </p>
-
 <ul>
   <li><%= link_to "Home", '/' %></li>
   <li><%= link_to "Edit",edit_nap_path(@nap)%></li>
