@@ -1,8 +1,8 @@
 # frozen_string_literal: true
-
 class NapsController < ApplicationController
   def index
     @naps = Nap.all
+    @profile = Profile.last
   end
 
   def show
@@ -114,7 +114,6 @@ class NapsController < ApplicationController
     redirect_to root_path
   end
 end
-
 
 private
 

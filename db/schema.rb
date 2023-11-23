@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_21_050444) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_23_083346) do
   create_table "calculations", force: :cascade do |t|
     t.time "wake_up_time"
     t.time "bedtime"
@@ -34,6 +34,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_050444) do
     t.datetime "updated_at", null: false
     t.text "calculated_schedule"
     t.decimal "awake_window", precision: 5, scale: 2
+  end
+
+  create_table "profiles", force: :cascade do |t|
+    t.string "name"
+    t.integer "age"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "results", force: :cascade do |t|
