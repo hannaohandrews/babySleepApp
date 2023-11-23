@@ -115,7 +115,8 @@ class NapsController < ApplicationController
   end
 end
 
-  private
+
+private
 
 def nap_params
   params.require(:nap).permit(:title, :date, :age, :wake_up_time, :bedtime)

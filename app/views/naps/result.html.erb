@@ -6,7 +6,6 @@
 <p>Desired Bedtime: <%= @nap.bedtime.strftime("%I:%M %p") %></p>
 <p>Awake Window: <%= @calculated_schedule[:awake_window] %> hours</p>
 <p>Nap Duration: <%= (@calculated_schedule[:nap_duration]) %> </p>
-
 <p>Nap1: <%= @calculated_schedule[:nap1]&.strftime("%I:%M %p") %></p>
 <p>Nap2: <%= @calculated_schedule[:nap2]&.strftime("%I:%M %p") %></p>
 
