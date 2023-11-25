@@ -2,11 +2,28 @@
 class NapsController < ApplicationController
   def index
     @naps = Nap.all
-    @profile = Profile.last
+    @profiles = Profile.all
+  end
+
+  def new
+    @profile = Profile.find(params[:profile_id])
+    @nap = @profile.build_nap(nap_params)
+  end
+
+  def create
+    @profile = Profile.find(params[:profile_id])
+    @nap = @profile.build_nap(nap_params)
+    if @nap.save
+      # Flash a success message
+      flash[:success] = 'Nap schedule created successfully!'
+      redirect_to calculate_schedule_path(id: @nap.id)
+    else
+      render 'new'
+    end
   end
 
   def show
-    @nap = Nap.find(params[:id])
+    @nap = Profile.find([params[:profile_id]]).nap
     @calculated_schedule = @nap.calculated_schedule
 
     return unless @nap.calculated_schedule.present?
@@ -32,23 +49,8 @@ class NapsController < ApplicationController
     @nap_duration = calculated_schedule_hash['nap_duration']
   end
 
-  def new
-    @nap = Nap.new
-  end
-
-  def create
-    @nap = Nap.new(nap_params)
-    if @nap.save
-      # Flash a success message
-      flash[:success] = 'Nap schedule created successfully!'
-      redirect_to calculate_schedule_path(id: @nap.id)
-    else
-      render 'new'
-    end
-  end
-
   def calculate_schedule
-    @nap = Nap.find(params[:id])
+    @nap =  Profile.find(params[:profile_id]).nap
 
     if @nap.valid?
       # Calculate the nap schedule
@@ -77,11 +79,11 @@ class NapsController < ApplicationController
   end
 
   def edit
-    @nap = Nap.find(params[:id])
+    @nap = @profile.nap
   end
 
   def update
-    @nap = Nap.find(params[:id])
+    @nap = @profile.nap
 
     if @nap.update(nap_params)
       flash[:success] = 'Nap schedule updated successfully!'
@@ -92,9 +94,8 @@ class NapsController < ApplicationController
   end
 
   def save_result
+    @nap = @profile.nap
     saved_schedule = params[:result_data]
-    @nap = Nap.find(params[:nap_id])
-    puts 'calculated schedule', @nap
 
     if @nap.update(calculated_schedule: saved_schedule)
       flash[:success] = 'Nap result saved successfully!'
@@ -107,13 +108,14 @@ class NapsController < ApplicationController
   end
 
   def destroy
-    @nap = Nap.find(params[:id])
+    @nap = @profile.nap
     @nap.destroy
 
     flash[:success] = 'Nap schedule deleted successfully!'
     redirect_to root_path
   end
 end
+
 
 private
 

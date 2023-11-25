@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Nap < ApplicationRecord
+  belongs_to :profile
   validates :title, presence: true
   validates :date, presence: true
   validates :age, presence: true, numericality: { only_integer: true }
