@@ -1,16 +1,16 @@
-<h1>BABY SLEEP APP</h1>
+<h1>SAVED NAPS</h1>
 
-<p>  <% @profile.name %></p>
-<p>  <% @profile.age %></p>
+<p>Name: <%= @profile.name%> </p>
+<p>Age: <%= @profile.age%> Months</p>
 
 <ul>
   <% @naps.each do |nap| %>
     <li>
-      <%= link_to nap.title, nap%>, <%= nap.date %>
+      <%= link_to nap.title, profile_naps_path(@profile,@nap)%>, <%= nap.date %>
     </li>
   <% end %>
 </ul>
 
   <div>
-  <%= link_to "New Nap Schdule", new_nap_path %>
+  <%= link_to "New Nap Schdule", new_profile_nap_path %>
   </div>

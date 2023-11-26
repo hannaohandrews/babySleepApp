@@ -3,7 +3,6 @@
 Rails.application.routes.draw do
 
   root 'profiles#index'
-  resources :naps
   resources :profiles do
     resources :naps
   end

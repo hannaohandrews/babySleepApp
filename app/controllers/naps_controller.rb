@@ -1,18 +1,20 @@
 # frozen_string_literal: true
 class NapsController < ApplicationController
+  before_action :find_profile, only: [:new, :create, :calculate_schedule]
+
   def index
-    @naps = Nap.all
-    @profiles = Profile.all
+    puts params.inspect
+    @profile = Profile.find(params[:profile_id])
+    @naps = @profile.naps
   end
 
   def new
-    @profile = Profile.find(params[:profile_id])
-    @nap = @profile.build_nap(nap_params)
+    @nap = @profile.naps.build
   end
 
   def create
-    @profile = Profile.find(params[:profile_id])
-    @nap = @profile.build_nap(nap_params)
+    @nap = @profile.naps.build(nap_params)
+
     if @nap.save
       # Flash a success message
       flash[:success] = 'Nap schedule created successfully!'
@@ -23,7 +25,8 @@ class NapsController < ApplicationController
   end
 
   def show
-    @nap = Profile.find([params[:profile_id]]).nap
+    @profile = Profile.find(params[:profile_id])
+    @nap = @profile.naps.find(params[:id])
     @calculated_schedule = @nap.calculated_schedule
 
     return unless @nap.calculated_schedule.present?
@@ -50,7 +53,8 @@ class NapsController < ApplicationController
   end
 
   def calculate_schedule
-    @nap =  Profile.find(params[:profile_id]).nap
+    puts 'DO YOU GET HEREREEEEEE'
+    @nap =  @profile.nap
 
     if @nap.valid?
       # Calculate the nap schedule
@@ -71,6 +75,7 @@ class NapsController < ApplicationController
         nap2: @nap2,
         nap_duration: @nap_duration
       }
+      puts 'DO YOU GET HERE RESULTTTT'
       render 'result'
     else
       puts "Validation Errors: #{nap.errors.full_messages}"
@@ -121,6 +126,10 @@ private
 
 def nap_params
   params.require(:nap).permit(:title, :date, :age, :wake_up_time, :bedtime)
+end
+
+def find_profile
+  @profile = Profile.find(params[:profile_id])
 end
 
 def naps_calculated

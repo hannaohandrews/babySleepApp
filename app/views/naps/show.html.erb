@@ -10,8 +10,8 @@
 <p> NAP2: <%= @nap.nap2&.strftime("%I:%M %p") %> </p>
 <ul>
   <li><%= link_to "Home", '/' %></li>
-  <li><%= link_to "Edit",edit_nap_path(@nap)%></li>
-  <li><%= link_to "Destroy",nap_path(@nap), data: {
+  <li><%= link_to "Edit",edit_profile_nap_path(@nap,@profile)%></li>
+  <li><%= link_to "Destroy",profile_nap_path(@nap,@profile), data: {
     turbo_method: :delete,
     turbo_confirm: "Are you sure?"
   } %></li>

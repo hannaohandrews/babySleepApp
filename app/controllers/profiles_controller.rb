@@ -11,7 +11,9 @@ class ProfilesController < ApplicationController
 		@profile = Profile.new(profile_params)
 
 		if @profile.save
-			redirect_to nap_index_path
+			flash[:success] = 'Profile created successfully.'
+			#GET /profiles/:id (profile show page)
+			redirect_to profile_path(@profile)
 		else
 			render 'new'
 		end
