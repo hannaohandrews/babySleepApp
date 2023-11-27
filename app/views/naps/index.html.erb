@@ -1,16 +1,19 @@
-<h1>SAVED NAPS</h1>
+<h1><%= @profile.name%>'s SAVED NAPS</h1>
 
-<p>Name: <%= @profile.name%> </p>
+<p></p>
 <p>Age: <%= @profile.age%> Months</p>
 
 <ul>
   <% @naps.each do |nap| %>
     <li>
-      <%= link_to nap.title, profile_naps_path(@profile,@nap)%>, <%= nap.date %>
+      <%= link_to nap.title, profile_nap_path(@profile,nap)%>, <%= nap.date %>
     </li>
   <% end %>
 </ul>
 
   <div>
   <%= link_to "New Nap Schdule", new_profile_nap_path %>
+  </div><br>
+   <div>
+  <%= link_to "Home", '/' %>
   </div>

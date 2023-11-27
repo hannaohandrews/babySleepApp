@@ -9,7 +9,7 @@
 <p>Nap1: <%= @calculated_schedule[:nap1]&.strftime("%I:%M %p") %></p>
 <p>Nap2: <%= @calculated_schedule[:nap2]&.strftime("%I:%M %p") %></p>
 
-<%= form_with url: save_result_path(nap_id: @nap.id), method: :post, local: true do |form| %>
+<%= form_with url: save_result_profile_nap_path(nap_id: @nap.id), method: :post, local: true do |form| %>
   <!-- Add any hidden fields or data you want to send to the save_result action aka :result_data -->
   <%= form.hidden_field :result_data, value: @calculated_schedule.to_json %>
   <%= form.submit 'Save', class: 'btn btn-primary' %>

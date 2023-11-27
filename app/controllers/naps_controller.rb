@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class NapsController < ApplicationController
-  before_action :find_profile, only: [:new, :create, :calculate_schedule]
+  before_action :find_profile, only: [:new, :create, :show, :edit, :update, :destroy, :calculate_schedule, :save_result]
 
   def index
     puts params.inspect
@@ -9,23 +9,23 @@ class NapsController < ApplicationController
   end
 
   def new
+    @profile = Profile.find(params[:profile_id])
     @nap = @profile.naps.build
   end
 
   def create
     @nap = @profile.naps.build(nap_params)
-
+  
     if @nap.save
       # Flash a success message
       flash[:success] = 'Nap schedule created successfully!'
-      redirect_to calculate_schedule_path(id: @nap.id)
+      redirect_to calculate_schedule_profile_nap_path(profile_id: @profile.id, id: @nap.id)
     else
       render 'new'
     end
   end
 
   def show
-    @profile = Profile.find(params[:profile_id])
     @nap = @profile.naps.find(params[:id])
     @calculated_schedule = @nap.calculated_schedule
 
@@ -53,9 +53,7 @@ class NapsController < ApplicationController
   end
 
   def calculate_schedule
-    puts 'DO YOU GET HEREREEEEEE'
-    @nap =  @profile.nap
-
+    @nap = @profile.naps.find(params[:id])
     if @nap.valid?
       # Calculate the nap schedule
       naps_calculated
@@ -65,7 +63,7 @@ class NapsController < ApplicationController
       if @nap.save
         puts 'Nap saved successfully'
       else
-        puts "Nap save failed with errors: #{nap.errors.full_messages}"
+        puts "Nap save failed with errors: #{@nap.errors.full_messages}"
       end
 
       # Assign the calculated values to instance variables for use in the view
@@ -75,37 +73,36 @@ class NapsController < ApplicationController
         nap2: @nap2,
         nap_duration: @nap_duration
       }
-      puts 'DO YOU GET HERE RESULTTTT'
       render 'result'
     else
-      puts "Validation Errors: #{nap.errors.full_messages}"
+      puts "Validation Errors: #{@nap.errors.full_messages}"
       render 'new'
     end
   end
 
   def edit
-    @nap = @profile.nap
+    @nap = @profile.naps.find(params[:id])
   end
 
   def update
-    @nap = @profile.nap
+    @nap = @profile.naps.find(params[:id])
 
     if @nap.update(nap_params)
       flash[:success] = 'Nap schedule updated successfully!'
-      redirect_to calculate_schedule_path(id: @nap.id)
+      redirect_to calculate_schedule_profile_nap_path(profile_id: @profile.id, id: @nap.id)
     else
       render 'edit'
     end
   end
 
   def save_result
-    @nap = @profile.nap
+    @nap = @profile.naps.find(params[:id])
     saved_schedule = params[:result_data]
 
     if @nap.update(calculated_schedule: saved_schedule)
       flash[:success] = 'Nap result saved successfully!'
       # Redirect to the home page (or any other path you want)
-      redirect_to root_path
+      redirect_to profile_naps_path(@profile)
     else
       flash[:error] = 'Error saving Nap result.'
       render 'result' # Render the result view again if there's an error
@@ -113,11 +110,11 @@ class NapsController < ApplicationController
   end
 
   def destroy
-    @nap = @profile.nap
+    @nap = @profile.naps.find(params[:id])
     @nap.destroy
 
     flash[:success] = 'Nap schedule deleted successfully!'
-    redirect_to root_path
+    redirect_to profile_naps_path(@profile)
   end
 end
 
@@ -133,6 +130,8 @@ def find_profile
 end
 
 def naps_calculated
+  @nap = @profile.naps.find(params[:id])
+
   if @nap.age == 1
     awake_window = 1
   elsif @nap.age == 2 || @nap.age == 3
@@ -159,6 +158,8 @@ def naps_calculated
 end
 
 def naps_duration_calculation
+  @nap = @profile.naps.find(params[:id])
+
   if @nap.age == 1
     nap_duration = '15 min to 4 hours'
   elsif @nap.age >= 2 && @nap.age <= 5
