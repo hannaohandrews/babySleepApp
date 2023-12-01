@@ -8,11 +8,3 @@
 <p> Nap duration: <%= @nap_duration %> </p>
 <p> NAP1: <%= @nap.nap1&.strftime("%I:%M %p") %> </p>
 <p> NAP2: <%= @nap.nap2&.strftime("%I:%M %p") %> </p>
-<ul>
-  <li><%= link_to "Home", '/' %></li>
-  <li><%= link_to "Edit",edit_profile_nap_path(@profile,@nap)%></li>
-  <li><%= link_to "Destroy",profile_nap_path(@profile,@nap), data: {
-    turbo_method: :delete,
-    turbo_confirm: "Are you sure?"
-  } %></li>
-</ul>

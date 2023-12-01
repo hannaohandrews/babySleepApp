@@ -1,15 +1,12 @@
 # frozen_string_literal: true
 class NapsController < ApplicationController
-  before_action :find_profile, only: [:new, :create, :show, :edit, :update, :destroy, :calculate_schedule, :save_result]
+  before_action :find_profile, only: [:index, :new, :create, :show, :edit, :update, :destroy, :calculate_schedule, :save_result]
 
   def index
-    puts params.inspect
-    @profile = Profile.find(params[:profile_id])
     @naps = @profile.naps
   end
 
   def new
-    @profile = Profile.find(params[:profile_id])
     @nap = @profile.naps.build
   end
 

@@ -1,12 +1,12 @@
 <h1>BABY SLEEP APP</h1>
-PROFILES
-<% @profiles.each do |profile| %>
-<p> 
-  Name: <%= link_to profile.name , profile_naps_path(profile)%>
-  Age: <%= profile.age %> Months 
- </p>
-<% end %>
+<h2>PROFILES</h2>
 
+<% @profiles.each do |profile| %>
+  <p> 
+    Name: <%= link_to profile.name , profile_naps_path(profile)%>
+    Age: <%= profile.age %> Months 
+  </p>
+<% end %>
 
   <div>
   <%= link_to "New Profile", new_profile_path %>

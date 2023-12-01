@@ -1,0 +1,16 @@
+<h1>EDIT</h1>
+
+<%= form_for @profile, url: profiles_path, method: :patch do |f| %>
+	<h1>NEW PROFILE</h1><br>
+	<div class="field">
+		<%= f.label :name %><br>
+		<%= f.text_field :name %>
+	</div>
+	<div class="field">
+		<%= f.label :age %><br>
+		<%= f.text_field :age %>
+	</div>
+	<div class="actions">
+		<%= f.submit 'Save Edit'%>
+	</div>
+<% end %>
