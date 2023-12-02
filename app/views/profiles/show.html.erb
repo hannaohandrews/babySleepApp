@@ -3,22 +3,14 @@
 <h2><%= @profile.name %> <%= @profile.age %> Months</h2>
 
 <ul>
-<li><%= link_to "Home", '/' %></li>
-<li><%= link_to "Edit",edit_profile_path(@profile)%></li>
-<li><%= link_to "Destroy",profile_path(@profile), data: {
+<li><%= link_to "Profile Edit",edit_profile_path(@profile)%></li>
+<li><%= link_to "Profile Destroy",profile_path(@profile), data: {
   turbo_method: :delete,
   turbo_confirm: "Are you sure?"
 } %></li>
 </ul>
-
 <ul>
   <li>  <%= link_to "Saved Naps", profile_naps_path(@profile) %></li>
-</ul>
-
-<ul>
   <li>  <%= link_to "Create New Nap", new_profile_nap_path(@profile) %></li>
 </ul>
-
-<ul>
-  <li><%= link_to "Home", '/' %></li>
-</ul>
+<%= link_to "Home", '/' %>

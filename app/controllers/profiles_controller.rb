@@ -27,6 +27,25 @@ class ProfilesController < ApplicationController
 		@profile = Profile.find(params[:id])
 	end
 
+	def update
+		@profile = Profile.find(params[:id])
+		if @profile.update(profile_params)
+			flash[:success] = 'Profile updated successfully'
+			redirect_to profile_path(@profile)
+		else
+			render 'edit'
+		end
+	end
+
+	def destroy
+		@profile = Profile.find(params[:id])
+		@profile.naps.destroy_all
+		@profile.destroy
+
+		flash[:success] = 'Profile deleted successfully!'
+		redirect_to root_path
+	end
+
 	private
 	def profile_params
 		params.require(:profile).permit(:name, :age)

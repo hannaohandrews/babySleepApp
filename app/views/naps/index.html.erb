@@ -17,7 +17,7 @@
 
   <ul>
   <li><%= link_to "Home", '/' %></li>
-  <li><%= link_to "Edit",edit_profile_path(@profile)%></li>
+  <li><%= link_to "Edit Profile",edit_profile_path(@profile)%></li>
   <li><%= link_to "Destroy",profile_path(@profile), data: {
     turbo_method: :delete,
     turbo_confirm: "Are you sure?"
