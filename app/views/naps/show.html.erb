@@ -8,7 +8,8 @@
 <p> Nap duration: <%= @nap_duration %> </p>
 <p> NAP1: <%= @nap.nap1&.strftime("%I:%M %p") %> </p>
 <p> NAP2: <%= @nap.nap2&.strftime("%I:%M %p") %> </p>
-
+<p> NAP3: <%= DateTime.parse(@nap.nap3).strftime("%I:%M %p") %> </p>
+<p> NAP4: <%= DateTime.parse(@nap.nap4).strftime("%I:%M %p") %> </p>
 
 <ul>
 <li><%= link_to "Home", '/' %></li>

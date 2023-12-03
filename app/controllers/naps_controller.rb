@@ -44,6 +44,8 @@ class NapsController < ApplicationController
     @nap.awake_window = calculated_schedule_hash['awake_window']
     @nap.nap1 = calculated_schedule_hash['nap1']
     @nap.nap2 = calculated_schedule_hash['nap2']
+    @nap.nap3 = calculated_schedule_hash['nap3']
+    @nap.nap4 = calculated_schedule_hash['nap4']
 
     # nap_duration is a string, so no need to convert it
     @nap_duration = calculated_schedule_hash['nap_duration']
@@ -68,6 +70,8 @@ class NapsController < ApplicationController
         awake_window: @awake_window,
         nap1: @nap1,
         nap2: @nap2,
+        nap3: @nap3,
+        nap4: @nap4,
         nap_duration: @nap_duration
       }
       render 'result'
@@ -152,6 +156,8 @@ def naps_calculated
   @awake_window = awake_window
   @nap1 = @nap.wake_up_time + awake_window.hours
   @nap2 = @nap1 + awake_window.hours
+  @nap3 = @nap2 + awake_window.hours
+  @nap4 = @nap3 + awake_window.hours
 end
 
 def naps_duration_calculation
