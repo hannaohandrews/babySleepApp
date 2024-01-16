@@ -56,6 +56,7 @@ class NapsController < ApplicationController
 
   def calculate_schedule
     @nap = @profile.naps.find(params[:id])
+    @nap_calculation = Calculation.find_by(nap_id: @nap.id)
 
     if @nap.valid?
       # Calculate the nap schedule
@@ -69,11 +70,9 @@ class NapsController < ApplicationController
         puts "Nap save failed with errors: #{@nap.errors.full_messages}"
       end
 
-      @nap_calculation = Calculation.find_by(nap_id: @nap.id)
-
       if @nap_calculation
         #update the exisitng schedule
-        @nap_calculation.update(
+        @nap_calculati on.update(
         nap1: @nap1,
         nap2: @nap2,
         nap3: @nap3,
