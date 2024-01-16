@@ -24,35 +24,39 @@ class NapsController < ApplicationController
 
   def show
     @nap = @profile.naps.find(params[:id])
-    @calculated_schedule = @nap.calculated_schedule
+    @nap_calculation = Calculation.find_by(nap_id: @nap.id)
 
-    return unless @nap.calculated_schedule.present?
-
-    # Parse the calculated_schedule JSON string into a hash
-    calculated_schedule_hash = JSON.parse(@nap.calculated_schedule)
     # Convert the time strings to DateTime objects if they are present
-    if calculated_schedule_hash['nap1'].present?
-      calculated_schedule_hash['nap1'] =
-        DateTime.parse(calculated_schedule_hash['nap1'])
-    end
-    if calculated_schedule_hash['nap2'].present?
-      calculated_schedule_hash['nap2'] =
-        DateTime.parse(calculated_schedule_hash['nap2'])
-    end
+    # if nap_calculation_hash['nap1'].present?
+    #   nap_calculation_hash['nap1'] =
+    #     DateTime.parse(nap_calculation_hash['nap1'])
+    # end
+    # if nap_calculation_hash['nap2'].present?
+    #   nap_calculation_hash['nap2'] =
+    #     DateTime.parse(nap_calculation_hash['nap2'])
+    # end
+    if @nap_calculation
+      # Assign the parsed values to instance variables for use in the view
+      @nap.awake_window = @nap_calculation.awake_window
+      @nap.nap1 = @nap_calculation.nap1
+      @nap.nap2 = @nap_calculation.nap2
+      @nap.nap3 = @nap_calculation.nap3
+      @nap.nap4 = @nap_calculation.nap4
 
-    # Assign the parsed values to instance variables for use in the view
-    @nap.awake_window = calculated_schedule_hash['awake_window']
-    @nap.nap1 = calculated_schedule_hash['nap1']
-    @nap.nap2 = calculated_schedule_hash['nap2']
-    @nap.nap3 = calculated_schedule_hash['nap3']
-    @nap.nap4 = calculated_schedule_hash['nap4']
+      # NEED TO DO LOGIC 
+      # if the last nap of the day is less than awake_window time away from bedtime, do not include the last nap 
+      # or if want to include the last nap, then delay the bedtime by the awake window
 
-    # nap_duration is a string, so no need to convert it
-    @nap_duration = calculated_schedule_hash['nap_duration']
+      # nap_duration is a string, so no need to convert it
+      @nap_duration = @nap_calculation.nap_duration
+    else 
+      puts 'NO CALCULATIONS'
+    end
   end
 
   def calculate_schedule
     @nap = @profile.naps.find(params[:id])
+
     if @nap.valid?
       # Calculate the nap schedule
       naps_calculated
@@ -65,17 +69,29 @@ class NapsController < ApplicationController
         puts "Nap save failed with errors: #{@nap.errors.full_messages}"
       end
 
-      # Assign the calculated values to instance variables for use in the view
-      @calculated_schedule = {
-        awake_window: @awake_window,
+      @nap_calculation = Calculation.find_by(nap_id: @nap.id)
+
+      if @nap_calculation
+        #update the exisitng schedule
+        @nap_calculation.update(
         nap1: @nap1,
         nap2: @nap2,
         nap3: @nap3,
         nap4: @nap4,
-        nap_duration: @nap_duration
-      }
+        awake_window: @awake_window,
+        nap_duration: @nap_duration)
+      else
+        @nap_calculation = Calculation.create(
+        nap1: @nap1,
+        nap2: @nap2,
+        nap3: @nap3,
+        nap4: @nap4,
+        awake_window: @awake_window,
+        nap_duration: @nap_duration)
+      end
+      
       render 'result'
-    else
+    else 
       puts "Validation Errors: #{@nap.errors.full_messages}"
       render 'new'
     end
@@ -100,7 +116,7 @@ class NapsController < ApplicationController
     @nap = @profile.naps.find(params[:id])
     saved_schedule = params[:result_data]
 
-    if @nap.update(calculated_schedule: saved_schedule)
+    if @nap.update(nap_calculation: saved_schedule)
       flash[:success] = 'Nap result saved successfully!'
       # Redirect to the home page (or any other path you want)
       redirect_to profile_naps_path(@profile)

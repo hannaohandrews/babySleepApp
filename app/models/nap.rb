@@ -2,6 +2,8 @@
 
 class Nap < ApplicationRecord
   belongs_to :profile
+  has_one :calculation
+
   validates :title, presence: true
   validates :date, presence: true
   validates :age, presence: true, numericality: { only_integer: true }
