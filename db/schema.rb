@@ -35,7 +35,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_16_063029) do
     t.datetime "updated_at", null: false
     t.text "calculated_schedule"
     t.decimal "awake_window", precision: 5, scale: 2
-    t.integer "profile_id"
+    t.integer "profile_id", null: false
     t.index ["profile_id"], name: "index_naps_on_profile_id"
   end
 

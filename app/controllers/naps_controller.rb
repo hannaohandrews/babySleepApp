@@ -72,7 +72,7 @@ class NapsController < ApplicationController
 
       if @nap_calculation
         #update the exisitng schedule
-        @nap_calculati on.update(
+        @nap_calculation.update(
         nap1: @nap1,
         nap2: @nap2,
         nap3: @nap3,
