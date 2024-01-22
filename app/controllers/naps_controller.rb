@@ -72,13 +72,14 @@ class NapsController < ApplicationController
 
       if @nap_calculation
         #update the exisitng schedule
-        @nap_calculati on.update(
+        @nap_calculation.update(
         nap1: @nap1,
         nap2: @nap2,
         nap3: @nap3,
         nap4: @nap4,
         awake_window: @awake_window,
-        nap_duration: @nap_duration)
+        nap_duration: @nap_duration,
+        nap_id: @nap.id)
       else
         @nap_calculation = Calculation.create(
         nap1: @nap1,
@@ -86,9 +87,11 @@ class NapsController < ApplicationController
         nap3: @nap3,
         nap4: @nap4,
         awake_window: @awake_window,
-        nap_duration: @nap_duration)
+        nap_duration: @nap_duration,
+        nap_id: @nap.id)
       end
-      
+      puts 'SAVING TO CALCULATIONNNNN'
+      puts "@nap_calculation #{@nap_calculation.inspect}"
       render 'result'
     else 
       puts "Validation Errors: #{@nap.errors.full_messages}"
@@ -113,15 +116,29 @@ class NapsController < ApplicationController
 
   def save_result
     @nap = @profile.naps.find(params[:id])
-    saved_schedule = params[:result_data]
+    puts "@nap #{@nap.inspect}"
 
-    if @nap.update(nap_calculation: saved_schedule)
-      flash[:success] = 'Nap result saved successfully!'
-      # Redirect to the home page (or any other path you want)
+    @nap_calculation = Calculation.find_by(nap_id: @nap.id)
+    puts 'MADE NAP CALCULATION'
+    puts "@nap_calculation: #{@nap_calculation.inspect}"
+
+    #Create a new FinalResult instance and associate with the new relevant Calculation 
+    @final_result = @nap_calculation.build_final_result(   
+      nap1: @nap_calculation.nap1,
+      nap2: @nap_calculation.nap2,
+      nap3: @nap_calculation.nap3,
+      nap4: @nap_calculation.nap4,
+      awake_window: @nap_calculation.awake_window,
+      nap_duration: @nap_calculation.nap_duration,
+      calculation_id: @nap_calculation.id)
+    puts 'FINAL RESULT'
+    puts "@final_result: #{@final_result.inspect}"
+
+    if @final_result.save
+      flash[:success] = "Nap result saved successfully"
       redirect_to profile_naps_path(@profile)
     else
-      flash[:error] = 'Error saving Nap result.'
-      render 'result' # Render the result view again if there's an error
+      flash[:error] = "Error saving Nap result"
     end
   end
 

@@ -21,20 +21,13 @@ class CalculationsController < ApplicationController
 
 	end
 
-	def show
-	end
-
 	private 
 
 	def calculation_params
-		params.require(:calculation).permit(:nap1,:nap2:nap3,:nap4, nap5, awake_window, nap_duration, nap_id)
+		params.require(:calculation).permit(:nap1,:nap2,:nap3,:nap4,:awake_window, :nap_duration,:nap_id)
 	end
 
 	def find_nap
 		@calculation = Calculation.find(params[:nap_id])
-		@calculation 
 	end
-
-
-
 end

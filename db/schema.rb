@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_16_063029) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_22_061445) do
   create_table "calculations", force: :cascade do |t|
     t.time "nap1"
     t.time "nap2"
@@ -22,7 +22,25 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_16_063029) do
     t.datetime "updated_at", null: false
     t.string "nap_duration"
     t.integer "nap_id"
+    t.integer "final_results_id"
+    t.index ["final_results_id"], name: "index_calculations_on_final_results_id"
     t.index ["nap_id"], name: "index_calculations_on_nap_id"
+  end
+
+  create_table "final_results", force: :cascade do |t|
+    t.time "wake_up_time"
+    t.time "bedtime"
+    t.time "nap1"
+    t.time "nap2"
+    t.time "nap3"
+    t.time "nap4"
+    t.time "nap5"
+    t.integer "awake_window"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "calculation_id", null: false
+    t.string "nap_duration"
+    t.index ["calculation_id"], name: "index_final_results_on_calculation_id"
   end
 
   create_table "naps", force: :cascade do |t|
@@ -46,19 +64,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_16_063029) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "results", force: :cascade do |t|
-    t.time "wake_up_time"
-    t.time "nap1"
-    t.time "nap2"
-    t.time "nap3"
-    t.time "nap4"
-    t.time "nap5"
-    t.time "bedtime"
-    t.integer "suggested_awake_window"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
+  add_foreign_key "calculations", "final_results", column: "final_results_id"
   add_foreign_key "calculations", "naps"
+  add_foreign_key "final_results", "calculations"
   add_foreign_key "naps", "profiles"
 end

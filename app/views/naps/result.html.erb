@@ -4,16 +4,16 @@
 <p>Age: <%= @nap.age %> Months</p>
 <p>Wake Up Time: <%= @nap.wake_up_time.strftime("%I:%M %p") %></p>
 <p>Desired Bedtime: <%= @nap.bedtime.strftime("%I:%M %p") %></p>
-<p>Awake Window: <%= @calculated_schedule[:awake_window] %> hours</p>
-<p>Nap Duration: <%= (@calculated_schedule[:nap_duration]) %> </p>
-<p>Nap1: <%= @calculated_schedule[:nap1]&.strftime("%I:%M %p") %></p>
-<p>Nap2: <%= @calculated_schedule[:nap2]&.strftime("%I:%M %p") %></p>
-<p>Nap3: <%= @calculated_schedule[:nap3]&.strftime("%I:%M %p") %></p>
-<p>Nap4: <%= @calculated_schedule[:nap4]&.strftime("%I:%M %p") %></p>
+<p>Awake Window: <%= @nap_calculation.awake_window %> hours</p>
+<p>Nap Duration: <%= (@nap_calculation.nap_duration) %> </p>
+<p>Nap1: <%= @nap_calculation.nap1&.strftime("%I:%M %p") %></p>
+<p>Nap2: <%= @nap_calculation.nap2&.strftime("%I:%M %p") %></p>
+<p>Nap3: <%= @nap_calculation.nap3&.strftime("%I:%M %p") %></p>
+<p>Nap4: <%= @nap_calculation.nap4&.strftime("%I:%M %p") %></p>
 
 <%= form_with url: save_result_profile_nap_path(nap_id: @nap.id), method: :post, local: true do |form| %>
   <!-- Add any hidden fields or data you want to send to the save_result action aka :result_data -->
-  <%= form.hidden_field :result_data, value: @calculated_schedule.to_json %>
+  <%= form.hidden_field :result_data, value: @nap_calculation %>
   <%= form.submit 'Save', class: 'btn btn-primary' %>
 <% end %>
 
