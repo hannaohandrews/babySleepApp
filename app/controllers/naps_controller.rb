@@ -42,13 +42,12 @@ class NapsController < ApplicationController
       @nap.nap2 = @nap_calculation.nap2
       @nap.nap3 = @nap_calculation.nap3
       @nap.nap4 = @nap_calculation.nap4
+      @nap_duration = @nap_calculation.nap_duration
 
       # NEED TO DO LOGIC 
       # if the last nap of the day is less than awake_window time away from bedtime, do not include the last nap 
       # or if want to include the last nap, then delay the bedtime by the awake window
 
-      # nap_duration is a string, so no need to convert it
-      @nap_duration = @nap_calculation.nap_duration
     else 
       puts 'NO CALCULATIONS'
     end
