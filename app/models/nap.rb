@@ -2,7 +2,7 @@
 
 class Nap < ApplicationRecord
   belongs_to :profile
-  has_one :calculation
+  has_one :calculation, class_name: 'Calculation', dependent: :destroy
 
   validates :title, presence: true
   validates :date, presence: true

@@ -1,5 +1,5 @@
-class FinalResult < ApplicationRecord
-	belongs_to :calculation
+# frozen_string_literal: true
 
-	attribute :nap_duration, :string
+class FinalResult < ApplicationRecord
+	belongs_to :calculation, class_name: 'Calculation'
 end
