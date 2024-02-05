@@ -33,3 +33,12 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+node_modules
+/node_modules
+.browserslistrc
+babel.config.js
+bin/
+config/webpack/
+config/webpacker.yml
+package.json
+postcss.config.js
